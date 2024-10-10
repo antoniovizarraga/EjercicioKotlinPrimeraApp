@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CalculadoraActivity : AppCompatActivity() {
@@ -24,7 +22,7 @@ class CalculadoraActivity : AppCompatActivity() {
         setContentView(R.layout.calculadora)
 
         var firstValue: Double
-        var secondvalue: Double
+        var secondValue: Double
         var result: Double
 
         firstValElement = findViewById<EditText>(R.id.firstValueField)
@@ -34,34 +32,43 @@ class CalculadoraActivity : AppCompatActivity() {
 
         // El evento del botón de sumar
         findViewById<Button>(R.id.sumButton).setOnClickListener {
-            firstValue = firstValElement.getText().toString().toDouble()
-            secondvalue = secondValElement.getText().toString().toDouble()
-            result = firstValue + secondvalue
+            firstValue = firstValElement.getText().toString().toDoubleOrNull() ?: 0.0
+            secondValue = secondValElement.getText().toString().toDoubleOrNull() ?: 0.0
+
+            result = firstValue + secondValue
             resultElement.setText(result.toString())
         }
 
         // El evento del botón de restar
         findViewById<Button>(R.id.subButton).setOnClickListener {
-            firstValue = firstValElement.getText().toString().toDouble()
-            secondvalue = secondValElement.getText().toString().toDouble()
-            result = firstValue - secondvalue
+            firstValue = firstValElement.getText().toString().toDoubleOrNull() ?: 0.0
+            secondValue = secondValElement.getText().toString().toDoubleOrNull() ?: 0.0
+
+            result = firstValue - secondValue
             resultElement.setText(result.toString())
         }
 
         // El evento del botón de multiplicar
         findViewById<Button>(R.id.mulButton).setOnClickListener {
-            firstValue = firstValElement.getText().toString().toDouble()
-            secondvalue = secondValElement.getText().toString().toDouble()
-            result = firstValue * secondvalue
+            firstValue = firstValElement.getText().toString().toDoubleOrNull() ?: 0.0
+            secondValue = secondValElement.getText().toString().toDoubleOrNull() ?: 0.0
+
+            result = firstValue * secondValue
             resultElement.setText(result.toString())
         }
 
         // El evento del botón de dividir
         findViewById<Button>(R.id.divButton).setOnClickListener {
-            firstValue = firstValElement.getText().toString().toDouble()
-            secondvalue = secondValElement.getText().toString().toDouble()
-            result = firstValue / secondvalue
-            resultElement.setText(result.toString())
+            firstValue = firstValElement.getText().toString().toDoubleOrNull() ?: 0.0
+            secondValue = secondValElement.getText().toString().toDoubleOrNull() ?: 0.0
+            if (firstValue == 0.0 || secondValue == 0.0) {
+                Toast.makeText(baseContext, "No se puede dividir entre cero.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                result = firstValue / secondValue
+                resultElement.setText(result.toString())
+
+            }
         }
 
         // Evento de botón flotante para volver al inicio de la aplicación
@@ -72,4 +79,6 @@ class CalculadoraActivity : AppCompatActivity() {
 
 
     }
+
+
 }
